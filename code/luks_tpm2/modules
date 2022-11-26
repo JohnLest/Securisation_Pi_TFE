@@ -1,0 +1,10 @@
+algif_skcipher
+xchacha20
+adiantum
+aes_arm
+sha256
+nhpoly1305
+dm-crypt
+tpm
+tpm_tis_core
+tpm_tis_spi

@@ -1,0 +1,13 @@
+#!/bin/sh -e
+PREREQS=""
+case $1 in
+        prereqs) echo "${PREREQS}"; exit 0;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+copy_exec /sbin/resize2fs /sbin
+copy_exec /sbin/fdisk /sbin
+copy_exec /sbin/cryptsetup /sbin
+copy_exec /usr/bin/clevis /sbin
+copy_exec /usr/bin/tpm2_pcrread /sbin

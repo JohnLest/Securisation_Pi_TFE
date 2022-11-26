@@ -1,0 +1,30 @@
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+cp ./initramfs-rebuild /etc/kernel/postinst.d/initramfs-rebuild
+chmod +x /etc/kernel/postinst.d/initramfs-rebuild
+
+cp ./luks_hooks /etc/initramfs-tools/hooks/luks_hooks
+chmod +x /etc/initramfs-tools/hooks/luks_hooks
+
+Modules=(algif_skcipher
+    xchacha20 adiantum aes_arm sha256
+    nhpoly1305
+    dm-crypt
+    tpm
+    tpm_tis_core
+    tpm_tis_spi)
+
+for mod in "${Modules[@]}";
+do
+    if ! grep -q "${mod}" /etc/initramfs-tools/modules; then
+        sed -i "$ a ${mod}" /etc/initramfs-tools/modules
+    fi
+done
+
+-E CRYPTSETUP=y mkinitramfs -o /boot/initramfs.gz
+
+sed -i "$ a initramfs initramfs.gz followkernel" /boot/config.txt
+
