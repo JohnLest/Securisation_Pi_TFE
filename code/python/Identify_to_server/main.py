@@ -1,3 +1,4 @@
+import json
 import requests
 import hashlib
 from pathlib import Path
@@ -10,8 +11,9 @@ uri = "http://192.168.0.100:8000"
 def main():
     certif_sum = get_certif_sum()
     cpu_info = get_cpuinfo()
+    data = {"id_cpu": cpu_info, "id_sum": certif_sum}
     try:
-        req = requests.post(f"{uri}/user/identification?id_cpu={cpu_info}&id_sum={certif_sum}", timeout=10 )
+        req = requests.post(f"{uri}/user/identification", data=json.dumps(data), timeout=10 )
     except requests.exceptions.ConnectTimeout:
         print("Error Timeout : Retrive ")
         main()
