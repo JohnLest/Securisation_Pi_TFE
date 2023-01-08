@@ -1,0 +1,2 @@
+sources rfid/bin/activate
+python rfid.py
