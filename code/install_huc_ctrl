@@ -8,3 +8,5 @@ git clone https://github.com/codazoda/hub-ctrl.c.git
 cd ./hub-ctrl.c/
 gcc -o hub-ctrl hub-ctrl.c -lusb
 cp hub-ctrl /usr/bin/
+cd ../.
+rm -R hub-ctrl.c/
